@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			
+			.nav_s {
+				padding: 0 15px;
+				float: left;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="box">
+			{{$route.params}}
+			<div style="border-bottom: 1px solid #CCCCCC; line-height: 60px;overflow: hidden;">
+				<div class="nav_s">
+					<a href="#/">
+						首页
+					</a>
+				</div>
+				<div class="nav_s">
+					<a href="#/no2">
+						产品
+					</a>
+				</div>
+				<div class="nav_s">
+					<a href="#/no3/1/no3_1/1">
+						茶叶
+					</a>
+				</div>
+
+			</div>
+			<!---->
+			<div style="min-height: 500px;">
+				<router-view></router-view>
+			</div>
+			<!---->
+			<div style="height: 150px;border-top: 1px solid #CCCCCC;">
+
+			</div>
+		</div>
+		<!--------------------------------->
+		<template id="no1">
+			<div>
+				首页
+			</div>
+		</template>
+		<template id="no2">
+			<div>
+				no2
+			</div>
+		</template>
+		<template id="no3">
+			<div style="overflow: hidden;">
+			     <div style="width: 200px;float: left;">
+			     	<div v-for="i in 15" style="line-height: 50px;">
+			     		<a :href="'#/no3/'+i+'/no3_1/'+i">
+			     			{{i}}
+			     		</a>
+	
+			     	</div>
+			     </div>
+			     <div>
+			     	<router-view>
+			     		
+			     	</router-view>
+<!--			     	
+			     	{{$route.path}}
+			     	{{$route.params}}-->
+			     </div>
+			</div>
+		</template>
+		<template id="no3_1">
+			<div>
+				{{$route.path}}
+				{{$route.params}}
+			</div>
+		</template>
+	</body>
+	<script src="vue.js"></script>
+	<script src="vue-router.js"></script>
+	<script>
+		var no1 = {
+			template: "#no1"
+		}
+		var no2 = {
+			template: "#no2"
+		}
+		var no3 = {
+			template: "#no3"
+		}
+
+		var routes = [{
+				path: '/',
+				component: no1
+			},
+			{
+				path: '/no2',
+				component: no2
+			},
+			{
+				path: '/no3/:uid',
+				component: no3,
+				children:[
+				 {path:'no3_1/:cc',component:{template:'#no3_1'}}
+				]
+			}
+		]
+
+		var router = new VueRouter({
+			routes
+		})
+
+		new Vue({
+			el: "#box",
+			router,
+			watch:{
+				'$route.params'(a,b){
+					console.log(a,b)
+				}
+			}
+		})
+	</script>
+
+</html>

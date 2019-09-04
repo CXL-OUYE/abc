@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			
+			.nav_s {
+				padding: 0 15px;
+				float: left;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="box">
+			<div style="border-bottom: 1px solid #CCCCCC; line-height: 60px;overflow: hidden;">
+				<div class="nav_s">
+					<a href="#/">
+						首页
+					</a>
+				</div>
+				<div class="nav_s">
+					<a href="#/no2">
+						产品
+					</a>
+				</div>
+				<div class="nav_s">
+					<a href="#/no3">
+						茶叶
+					</a>
+				</div>
+
+			</div>
+			<!---->
+			<div style="min-height: 500px;">
+				<router-view></router-view>
+			</div>
+			<!---->
+			<div style="height: 150px;border-top: 1px solid #CCCCCC;">
+
+			</div>
+		</div>
+		<!--------------------------------->
+		<template id="no1">
+			<div>
+				首页
+			</div>
+		</template>
+		<template id="no2">
+			<div>
+				<div style="width: 150px;float: left;border-right: 1px solid #CCCCCC;min-height: 500px;">
+					<div>
+						<a href="#/no2/">
+							蔬菜
+						</a>
+					</div>
+					<div>
+						<a href="#/no2/no2_2">
+							水果
+						</a>
+					</div>
+				</div>
+				<div style="float: left;">
+					<router-view></router-view>
+				</div>
+			</div>
+		</template>
+		<template id="no3">
+			<div>
+				<lee></lee>
+			</div>
+		</template>
+		//2
+		<template id="no2_1">
+			<div>
+				蔬菜
+			</div>
+		</template>
+		<template id="no2_2">
+			<div>
+				水果
+			</div>
+		</template>
+		<!---->
+		<template id="tea">
+			<div>
+                <div>
+                	<span v-for="i in tea_name" :style="{margin:' 0 15px',color:i==type?'red':''}" @click="type=i">{{i}}</span>
+                </div>
+                <div>
+                	<div v-if="type=='全部'">
+                		<div v-for="i in tea_info">
+                			{{i.name}}
+                		</div>
+                	</div>
+                	<div v-else>
+                		<div v-for="i in tea_info" v-if="i.type == type">
+                			{{i.name}}
+                		</div>
+                	</div>
+                </div>
+			</div>
+		</template>
+	</body>
+	<script src="vue.js"></script>
+	<script src="vue-router.js"></script>
+	<script>
+		Vue.component('lee', {
+			template: '#tea',
+			data() {
+				return {
+					type:'全部',
+					tea_name: ['全部', '黄茶', '乌龙茶', '红茶', '黑茶', '白茶', '花茶'],
+					tea_info: [{
+							img_url: 'https://ccdn.goodq.top/caches/9b69daffc17579b848483c854813cad2/aHR0cHM6Ly81Y2RkM2FhNWM0NmVhLnQ3My5xaWZlaXllLmNvbS9xZnktY29udGVudC91cGxvYWRzLzIwMTkvMDQvODMxNGZmNmYyYjkyNzcxZmY2N2U5NjdlZjQyNjAzZWItNDAweDQwMC5qcGc_p_p100_p_3D.jpg',
+							name: '茉莉花茶',
+							price: '￥223.0',
+							type: '花茶'
+						},
+						{
+							img_url: 'https://ccdn.goodq.top/caches/9b69daffc17579b848483c854813cad2/aHR0cHM6Ly81Y2RkM2FhNWM0NmVhLnQ3My5xaWZlaXllLmNvbS9xZnktY29udGVudC91cGxvYWRzLzIwMTkvMDQvMGFkMzdiZDQwOGNjYWMwYzI0Y2JmNzdiMDZiNDg4ODAtNDAweDQwMC5qcGc_p_p100_p_3D.jpg',
+							name: '白牡丹',
+							price: '￥1235.0',
+							type: '白茶'
+						},
+						{
+							img_url: 'https://ccdn.goodq.top/caches/9b69daffc17579b848483c854813cad2/aHR0cHM6Ly81Y2RkM2FhNWM0NmVhLnQ3My5xaWZlaXllLmNvbS9xZnktY29udGVudC91cGxvYWRzLzIwMTkvMDQvOTc4NTUwMDZjYzA1MDQ1OGVkMDFmZjE2N2I4YjNkOTctNDAweDQwMC5qcGc_p_p100_p_3D.jpg',
+							name: '白毫银针',
+							price: '￥258.0',
+							type: '白茶'
+						},
+						{
+							img_url: 'https://ccdn.goodq.top/caches/9b69daffc17579b848483c854813cad2/aHR0cHM6Ly81Y2RkM2FhNWM0NmVhLnQ3My5xaWZlaXllLmNvbS9xZnktY29udGVudC91cGxvYWRzLzIwMTkvMDQvMDMzMjg2Zjc0ZWU4M2ZiM2U5MTllZTgwMDc4MjRjNTAtNDAweDQwMC5qcGc_p_p100_p_3D.jpg',
+							name: '云南普洱茶',
+							price: '￥500.0',
+							type: '黑茶'
+						},
+						{
+							img_url: 'https://ccdn.goodq.top/caches/9b69daffc17579b848483c854813cad2/aHR0cHM6Ly81Y2RkM2FhNWM0NmVhLnQ3My5xaWZlaXllLmNvbS9xZnktY29udGVudC91cGxvYWRzLzIwMTkvMDQvMjY1ZjU4NWU5ZmNmYjkxMDBlMzc1YmFkMDQyNTkwMzEtNDAweDQwMC5qcGc_p_p100_p_3D.jpg',
+							name: '湖北老青茶',
+							price: '￥400.0',
+							type: '黑茶'
+						},
+						{
+							img_url: 'https://ccdn.goodq.top/caches/9b69daffc17579b848483c854813cad2/aHR0cHM6Ly81Y2RkM2FhNWM0NmVhLnQ3My5xaWZlaXllLmNvbS9xZnktY29udGVudC91cGxvYWRzLzIwMTkvMDQvMjhlYTFmMDQ0Y2NhOWI4NWEzYWZkMzExYzczZTY3MjQtNDAweDQwMC5qcGc_p_p100_p_3D.jpg',
+							name: '霍山黄芽蒙洱银针',
+							price: '￥711.0',
+							type: '黄茶'
+						},
+						{
+							img_url: 'https://ccdn.goodq.top/caches/9b69daffc17579b848483c854813cad2/aHR0cHM6Ly81Y2RkM2FhNWM0NmVhLnQ3My5xaWZlaXllLmNvbS9xZnktY29udGVudC91cGxvYWRzLzIwMTkvMDQvNWM4NmNiNjkzOTdjOTM4NWQ4MzI0MDdlZDhhY2EwMmUtNDAweDQwMC5qcGc_p_p100_p_3D.jpg',
+							name: '蒙顶黄芽',
+							price: '￥450.0',
+							type: '黄茶'
+						},
+						{
+							img_url: 'https://ccdn.goodq.top/caches/9b69daffc17579b848483c854813cad2/aHR0cHM6Ly81Y2RkM2FhNWM0NmVhLnQ3My5xaWZlaXllLmNvbS9xZnktY29udGVudC91cGxvYWRzLzIwMTkvMDQvNWNjYjNmZjU3YWU2YjBmMmRiYWZmOTk2MzljY2E4N2MtNDAweDQwMC5qcGc_p_p100_p_3D.jpg',
+							name: '冻顶乌龙茶',
+							price: '￥620.0',
+							type: '乌龙茶'
+						},
+						{
+							img_url: 'https://ccdn.goodq.top/caches/9b69daffc17579b848483c854813cad2/aHR0cHM6Ly81Y2RkM2FhNWM0NmVhLnQ3My5xaWZlaXllLmNvbS9xZnktY29udGVudC91cGxvYWRzLzIwMTkvMDQvNDM1OTBkNjFjM2ViOGU2YzUyYWU3ZmM2N2I3YjQwZGMtNDAweDQwMC5qcGc_p_p100_p_3D.jpg',
+							name: '大红袍',
+							price: '￥3480.0',
+							type: '乌龙茶'
+						},
+						{
+							img_url: 'https://ccdn.goodq.top/caches/9b69daffc17579b848483c854813cad2/aHR0cHM6Ly81Y2RkM2FhNWM0NmVhLnQ3My5xaWZlaXllLmNvbS9xZnktY29udGVudC91cGxvYWRzLzIwMTkvMDQvYzNjYmVkZWE4N2JmNzZjOTUyODdjZWUyYWQ4MjgyM2MtNDAweDQwMC5qcGc_p_p100_p_3D.jpg',
+							name: '祁门红茶',
+							price: '￥468.0',
+							type: '红茶'
+						},
+						{
+							img_url: 'https://ccdn.goodq.top/caches/9b69daffc17579b848483c854813cad2/aHR0cHM6Ly81Y2RkM2FhNWM0NmVhLnQ3My5xaWZlaXllLmNvbS9xZnktY29udGVudC91cGxvYWRzLzIwMTkvMDQvMjc0Y2E2YTE1Nzc3Mjk4MTFhMDJiOTg0Y2ZlMzliY2MtNDAweDQwMC5qcGc_p_p100_p_3D.jpg',
+							name: '正山小种',
+							price: '￥952.0',
+							type: '红茶'
+						},
+						{
+							img_url: 'https://ccdn.goodq.top/caches/9b69daffc17579b848483c854813cad2/aHR0cHM6Ly81Y2RkM2FhNWM0NmVhLnQ3My5xaWZlaXllLmNvbS9xZnktY29udGVudC91cGxvYWRzLzIwMTkvMDQvYTY5N2NjZmUxNzIwNTg1YjcwM2E2OTk2ZWY3N2U4NmEtNDAweDQwMC5qcGc_p_p100_p_3D.jpg',
+							name: '西湖龙井特级',
+							price: '￥888.0',
+							type: '绿茶'
+						},
+						{
+							img_url: 'https://ccdn.goodq.top/caches/9b69daffc17579b848483c854813cad2/aHR0cHM6Ly81Y2RkM2FhNWM0NmVhLnQ3My5xaWZlaXllLmNvbS9xZnktY29udGVudC91cGxvYWRzLzIwMTkvMDQvYWNkYWZkYWVmNGVlM2NiNmJlYTFjNWI5MWE2MzQwOGMtNDAweDQwMC5qcGc_p_p100_p_3D.jpg',
+							name: '洞庭碧螺春',
+							price: '￥880.0',
+							type: '绿茶'
+						}
+					]
+				}
+			}
+		})
+		var no1 = {
+			template: "#no1"
+		}
+		var no2 = {
+			template: "#no2"
+		}
+		var no3 = {
+			template: "#no3"
+		}
+		var no2_1 = {
+			template: "#no2_1"
+		}
+		var no2_2 = {
+			template: "#no2_2"
+		}
+
+		var routes = [{
+				path: '/',
+				component: no1
+			},
+			{
+				path: '/no2',
+				component: no2,
+				children: [{
+						path: '/',
+						component: no2_1
+					},
+					{
+						path: 'no2_2',
+						component: no2_2
+					}
+				]
+			},
+			{
+				path: '/no3',
+				component: no3
+			}
+		]
+
+		var router = new VueRouter({
+			routes
+		})
+
+		new Vue({
+			el: "#box",
+			router
+		})
+	</script>
+
+</html>
